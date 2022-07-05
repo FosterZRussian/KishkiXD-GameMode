@@ -1,0 +1,8 @@
+"kishki_xd"
+{
+	"base"		"base"
+	"title"		"«KishkiXD» — Horror Gamemode"
+	"category"	"other"
+	"maps"		"^"
+	"menusystem"	"1"
+}
