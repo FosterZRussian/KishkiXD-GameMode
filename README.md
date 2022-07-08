@@ -1,6 +1,8 @@
 
 
-Repository of «KishkiXD» gamemode for Garry`s Mod.
+Repository of «KishkiXD» gamemode for Garry`s Mod. 
+
+It may not contain some changes, as it is an example for creating its own monsters.
 
 * Developed by FosterZRussian: https://steamcommunity.com/id/fosterzrussian/
 * Steam Workshop: https://steamcommunity.com/sharedfiles/filedetails/?id=2832198881
