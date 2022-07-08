@@ -3,7 +3,7 @@
 Repository of «KishkiXD» gamemode for Garry`s Mod.
 
 * Developed by FosterZRussian: https://steamcommunity.com/id/fosterzrussian/
-* Steam Workshop: https://steamcommunity.com/sharedfiles/filedetails/?id=2830479767
+* Steam Workshop: https://steamcommunity.com/sharedfiles/filedetails/?id=2832198881
 
 
 Use the "gamemonsters" directory to add your monster to game.
