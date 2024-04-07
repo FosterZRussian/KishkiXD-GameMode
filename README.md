@@ -15,3 +15,6 @@ An example will be provided on github at this link:
 
 Also you can find API methods there:
 * https://github.com/FosterZRussian/kishkixd_gmod/blob/main/gamemodes/kishki_xd/gamemode/config/gamemonsters.lua
+
+* ![alt text]([http://url/to/img.png](https://i.imgur.com/ysNqOt7.gif))
+
