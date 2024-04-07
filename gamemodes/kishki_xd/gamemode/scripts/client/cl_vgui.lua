@@ -75,7 +75,7 @@ end
 
 function RebuildFonts() 
 	surface.CreateFont( "SOCIOPATHY_PROJECT_HUDFont", {
-		font = "Arial", 
+		font = "Roboto", 
 		extended = false,
 		size = 50*GetBased_H(),
 		weight = 100,
@@ -92,7 +92,7 @@ function RebuildFonts()
 		outline = true,
 	} )
 	surface.CreateFont( "SOCIOPATHY_PROJECT_HUDFont_2", {
-		font = "Arial", 
+		font = "Roboto", 
 		extended = false,
 		size = 80*GetBased_H(),
 		weight = 100,
@@ -557,6 +557,7 @@ function SOCIOPATHY_PROJECT.VGUI:ShowMenu(menu_type)
 										now_item = 1,
 									}
 									for k,v in pairs(SOCIOPATHY_PROJECT.GameLogic.GameMonsters) do
+										if !v.MetaData.DrawInStorageReview then continue end
 										local next_id = #tbs['data'].items+1
 										tbs['data'].items[next_id] = v
 									end

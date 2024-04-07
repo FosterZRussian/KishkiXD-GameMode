@@ -163,7 +163,6 @@ local defaultItemData = {
 					func = function(method_values, shared_values, object_table, player_ent) 
 						if CurTime() > method_values.LastCheckStress then
 							if math.random(0,4) == 4 then
-								print(2)
 								shared_values.ForceMoveToEnemy = CurTime() + 5
 								object_table.SystemMethods.CallMethod("LogicMethods" , "OnSetEnemy", player_ent, object_table)
 							end
@@ -371,7 +370,7 @@ local defaultItemData = {
 
 						local enemy_normal_speed = shared_values.ActiveEnemy:GetMaxSpeed()
 						local enemy_max_speed = shared_values.ActiveEnemy:GetRunSpeed()
-						return enemy_normal_speed + ((enemy_max_speed - enemy_normal_speed) / 2)
+						return (enemy_normal_speed + ((enemy_max_speed - enemy_normal_speed) / 2)) * shared_values.SpeedForce
 					end,
 					values = {
 					} 
@@ -515,7 +514,13 @@ local defaultItemData = {
 								if CurTime() > method_values.LastSound_TimerIdle then
 									local rnd_snd = table.Random(shared_values.MonsterSounds.Idle)
 									ent:EmitSound(rnd_snd.path, 100, 100)
-									method_values.LastSound_TimerIdle = CurTime() + rnd_snd.time
+									--method_values.LastSound_TimerIdle = CurTime() + rnd_snd.time
+
+									if rnd_snd.time_max != nil then
+										method_values.LastSound_TimerIdle = CurTime() + math.random(rnd_snd.time,rnd_snd.time_max)
+									else
+										method_values.LastSound_TimerIdle = CurTime() + rnd_snd.time
+									end
 								end
 							end
 							if shared_values.MonsterSounds.Angry != nil then
@@ -523,7 +528,11 @@ local defaultItemData = {
 									if CurTime() > method_values.LastSound_TimerAngry then
 										local rnd_snd = table.Random(shared_values.MonsterSounds.Angry)
 										ent:EmitSound(rnd_snd.path, 100, 100)
-										method_values.LastSound_TimerAngry = CurTime() + rnd_snd.time
+										if rnd_snd.time_max != nil then
+											method_values.LastSound_TimerAngry = CurTime() + math.random(rnd_snd.time,rnd_snd.time_max)
+										else
+											method_values.LastSound_TimerAngry = CurTime() + rnd_snd.time
+										end
 									end
 								end
 							end
@@ -576,6 +585,7 @@ local defaultItemData = {
 				CheckVisibleAmbient = true,
 				LastSeeEnemy = 0,
 				ActiveEnemy = nil,
+				SpeedForce = 1,
 				VisibleFromEnemy = false,
 				TraceToEnemy = nil,
 				ForceMoveToEnemy = 0,
@@ -608,6 +618,7 @@ local defaultItemData = {
 	MetaData = {
 		ItemName = "ITEMNAME",
 		ItemDescription = "ITEMDESC",
+		DrawInStorageReview = true,
 	},
 }
 
@@ -621,7 +632,9 @@ function SOCIOPATHY_PROJECT.GameLogic:RegisterMonster(data)
 	SOCIOPATHY_PROJECT.GameLogic.GameMonsters[data.ItemData.SystemName] = {}
 	for k,v in pairs(defaultItemData) do
 		for k2, v2 in pairs(v) do
-			data[k][k2] = data[k][k2] or v2
+			if data[k][k2] == nil then
+				data[k][k2] = v2
+			end
 		end
 	end
 	SOCIOPATHY_PROJECT.GameLogic.GameMonsters[data.ItemData.SystemName] = data
@@ -629,7 +642,6 @@ end
 function SOCIOPATHY_PROJECT.GameLogic:SpawnMonster(monster_class)
 	local ent = ents.Create("npc_hunter")
 	ent:Spawn()
-	
 	ent:SetupLogicTable(monster_class)
 
 	ent:SetPos(table.Random(navmesh.GetAllNavAreas()):GetCenter() + Vector(0,0,10) )
@@ -650,6 +662,7 @@ SOCIOPATHY_PROJECT.GameLogic:IncludeMonster("m_ghost") --]]
 for k,v in pairs(file.Find("gamemodes/kishki_Xd/gamemode/config/gamemonsters/*", "GAME")) do
 	SOCIOPATHY_PROJECT.GameLogic:IncludeMonster(string.StripExtension(v))
 end 
+
 
 for k,v in pairs(ents.FindByClass("npc_hunter")) do
 	if v.CachedClass != nil then

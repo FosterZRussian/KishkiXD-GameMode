@@ -24,22 +24,30 @@ GameModeTable.DefaultItemsOnGiveList['item_lighter'] = true
 
 GameModeTable.QuestItemsSpawnList = {}
 
+function SOCIOPATHY_PROJECT.GameLogic:SpawnFirstMonster(key)
+	_G.KishkiXD_SpawnMainMonster = true
+	SOCIOPATHY_PROJECT.GameLogic:SpawnMonster(key) 
+end
+
 function GameModeTable:OnGameModeStart(is_record_game)
 
 	local _ ,key = table.Random(GameModeTable.MonstersSpawnList)
 
-	if timer.Exists("spawnmonster") then
-		timer.Remove("spawnmonster")
+	if timer.Exists("KishkiXD_SpawnMainMonster") then
+		timer.Remove("KishkiXD_SpawnMainMonster")
 	end
 
 	local spawn_tiemr = math.random(20,100)
 
 	if is_record_game then
-		SOCIOPATHY_PROJECT.GameLogic:SpawnMonster(key)
+		timer.Simple(0.1, function() 
+			SOCIOPATHY_PROJECT.GameLogic:SpawnFirstMonster(key) 
+		end)		
 	else
-		timer.Create("spawnmonster", spawn_tiemr , 1, function()
-			SOCIOPATHY_PROJECT.GameLogic:SpawnMonster(key)
-		end)
+		timer.Create("KishkiXD_SpawnMainMonster", spawn_tiemr , 1, function()
+			SOCIOPATHY_PROJECT.GameLogic:SpawnFirstMonster(key)
+			timer.Remove("KishkiXD_SpawnMainMonster")
+		end)		
 	end
 	
 	game.GetWorld():SetNWBool("IsQuest_Mode", !is_record_game)

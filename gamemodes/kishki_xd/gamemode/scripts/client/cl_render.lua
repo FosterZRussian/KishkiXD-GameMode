@@ -647,7 +647,8 @@ hook.Add("RenderScreenspaceEffects", "SOCIOPATHY_PROJECTRenderScreenspaceEffects
 	cam.Start2D()
 		surface.SetDrawColor(255,255,255,255)
 		surface.SetMaterial(SOCIOPATHY_PROJECT.Render.MAT["MAIN_BEFOREUI"])
-		surface.DrawTexturedRectUV(0,0,ScrW(),ScrH(),1,0,0,1)
+		--surface.DrawTexturedRectUV(0,0,ScrW(),ScrH(),1,0,0,1)
+		surface.DrawTexturedRectUV(0,0,ScrW(),ScrH(),0,0,1,1) -- pain effect?
 
 
 		

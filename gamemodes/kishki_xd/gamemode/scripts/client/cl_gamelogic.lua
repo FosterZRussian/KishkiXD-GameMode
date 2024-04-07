@@ -114,17 +114,18 @@ hook.Add("StartCommand", "SOCIOPATHY_PROJECT_StartCommand", function(ply, cmd)
 	local cmd_angs = cmd:GetViewAngles()
 	--cmd:SetViewAngles()
 end)
-local sens = 0.074*0.25
+
+--[[ local sens = 0.074*0.25 -- removed
 hook.Add( "InputMouseApply", "SOCIOPATHY_PROJECT_Mouse", function( cmd,x,y,ang )
 	cmd:SetViewAngles(ang+Angle(y*sens,x*sens))
 	cmd:SetMouseX( -x )
 	cmd:SetMouseY( -y ) 
 	return true
-end )
+end )--]] 
 
-hook.Add("CreateMove", "SOCIOPATHY_PROJECT_StartCommand", function(cmd)
+--[[ hook.Add("CreateMove", "SOCIOPATHY_PROJECT_StartCommand", function(cmd)
     cmd:SetSideMove(cmd:GetSideMove()*-1)
-end)
+end)--]] 
 
 function SOCIOPATHY_PROJECT.GameLogic:Rotate2DPoint(x,y,angle)
 	angle = math.rad(angle)
@@ -414,6 +415,11 @@ function SOCIOPATHY_PROJECT.GameLogic:ThinkMinEnemies(ply)
 
 end
 
+
+
+hook.Add( "EntityEmitSound", "SOCIOPATHY_PROJECT_EntityEmitSound", function( t )		
+	--PrintTable(t)		
+end)
 
 function _DistBAngle(ang1, ang2)
 	local distance = (ang1-ang2) % 360
